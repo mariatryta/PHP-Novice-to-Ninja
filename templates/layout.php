@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/jokes.css">
+    <link rel="stylesheet" href="../public/jokes.css">
     <title><?=$title?></title>
   </head>
   <body>
@@ -23,7 +23,7 @@
   </main>
 
   <footer>
-  &copy; IJDB 2017
+    &copy; IJDB 2017
   </footer>
   </body>
 </html>
