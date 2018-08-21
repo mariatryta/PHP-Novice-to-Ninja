@@ -5,8 +5,8 @@
 
 // Catching errors in connection
 try{
-    $pdo = new PDO('mysql:host=localhost;dbname=jokesdatabase; charset=utf8','root','1234'); //storing the connection
-    $pdo -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); //must be because of silent mode
+    include __DIR__ . '/../includes/DatabaseConnection.php';
+    include __DIR__ . '/../includes/DatabaseFunctions.php'; // creates totaljokes variable that can be used in jokesdata.php
     $sql = 'SELECT `jokes`.`id`, `joketext`, `name`, `email` FROM `jokes` INNER JOIN `author` ON `authorid` = `author`.`id`';
  
     $jokes = $pdo->query($sql);
@@ -24,6 +24,7 @@ try{
 
     // Option b) ob, save all the unique html code in a buffer and spit it out in 
     // layout.html which is the same for every page
+    $totalJokes = totalJokes($pdo);
 
     ob_start();
     include  __DIR__ . '/../templates/jokes.php';

@@ -20,7 +20,7 @@ body {font-size: 1.2em; font-family: arial, helvetica, sans-serif}
 input, label, select, textarea { width: 15em; margin-bottom: 1em;  padding: 0.5em;}
 label {clear: left; padding: 0; margin: 0;}
 input[type="submit"] {background-color: #FFC9A7; border: none ;margin-left: 15em; width: auto; padding: 0.4em 0.5em; clear: both; font-size: .7em;}
-form {overflow: auto; clear: both; display: block;}
+form {; clear: both; display: block;}
 .flex{
     display: flex;
     align-items: center;
@@ -29,6 +29,15 @@ form {overflow: auto; clear: both; display: block;}
     margin: auto;
 }
 .flex-child{
-    flex: 50%;
-
+    flex-shrink: 1;
+}
+#edit{
+    margin-left: 2em;
+    background-color: rgb(91, 250, 170); 
+    border: none ;
+    width: auto; 
+    padding: 0.4em 0.5em;
+    font-size: .7em;
+    color: rgb(37, 37, 37);
+    text-decoration: none;
 }

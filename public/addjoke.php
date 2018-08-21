@@ -2,16 +2,11 @@
 
 if (isset($_POST['joketext'])){
     try{
-        $pdo = new PDO('mysql:host=localhost;dbname=jokesdatabase; charset=utf8','root','1234'); //storing the connection
-        $pdo -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); //must be because of silent mode
+        include __DIR__ . '/../includes/DatabaseConnection.php';
+        include __DIR__ . '/../includes/DatabaseFunctions.php';
 
         //stmt preparation, then binding values and executing
-        $sql = 'INSERT INTO `jokes` SET
-              `joketext` = :joketext,
-              `name` = "joke xx"';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':joketext', $_POST['joketext']);
-        $stmt->execute();
+        insertJoke($pdo, $_POST['joketext'], 1);
         header('location: jokesdata.php'); //send back to database display after submiting
 
     } catch(PDOException $e){
