@@ -30,10 +30,33 @@ function insertJoke($pdo, $joketext, $authorId) {
 }  
 
 // Update joke
-function updateJoke($pdo, $jokeId, $joketext, $authorId){ 
-    $parameters = [':joketext' => $joketext,
-                    ':authorId' => $authorId,
-                    ':id' => $jokeId];
-    query($pdo, 'UPDATE `jokes` SET `authorId` = :authorId,`joketext` = :joketext 
-                 WHERE `id` = :id', $parameters); 
+function updateJoke($pdo, $fields){ 
+	// start updating query
+   $query = 'UPDATE `jokes` SET';
+	//generate the query dynamicaly, loop over the singles
+   foreach($array as $key => $value){
+	   $query .=  '`' . $key . '` = :' . $key . ',';
+   }
+   // stripping the ending comma to make query run
+   $query = rtrim($query, ',');
+   // concat the rest of the query with .=
+   $query .= ' WHERE `id` = :primaryKey'; 
+   // Set the :primaryKey variable
+   $fields['primaryKey'] = $fields['id'];
+   query($pdo, $query, $fields); 
+}
+
+// Delete joke
+function deleteJoke ($pdo, $id){
+	$parameters = [':id' => $id];
+
+	query($pdo, 'DELETE FROM `jokes` WHERE `id` = :id', $parameters); 
+}
+
+// Fetch all jokes
+function allJokes($pdo){
+	$jokes = query($pdo, 'SELECT `joke`.`id`, `joketext`,`name`, `email`FROM `jokes` INNER JOIN `author`ON `authorid` = `author`.`id`');
+
+	return $jokes->fetchAll();
+
 }

@@ -1,12 +1,12 @@
 <?php
     include __DIR__ . '/../includes/DatabaseConnection.php';
     include __DIR__ . '/../includes/DatabaseFunctions.php';
-    try {
+    try { 
 		if (isset($_POST['joketext'])) {
 		updateJoke($pdo, $_POST['jokeid'], $_POST['joketext'], 1);
 		header('location: jokesdata.php');  
 	}
-	else {
+	else { //retrieve the text
 		$joke = getJoke($pdo, $_GET['id']);
 		$title = 'Edit joke';
 		ob_start();
