@@ -7,11 +7,9 @@
 try{
     include __DIR__ . '/../includes/DatabaseConnection.php';
     include __DIR__ . '/../includes/DatabaseFunctions.php'; // creates totaljokes variable that can be used in jokesdata.php
-    $sql = 'SELECT `jokes`.`id`, `joketext`, `name`, `email` FROM `jokes` INNER JOIN `author` ON `authorid` = `author`.`id`';
- 
-    $jokes = $pdo->query($sql);
+    $jokes = allJokes($pdo);
     $title = 'Joke list';
-    
+  
     // Option a) Display jokes in output in layout.php where output gets html code //concataneded
     // $output = '';
     // foreach ($jokes as $joke) {
