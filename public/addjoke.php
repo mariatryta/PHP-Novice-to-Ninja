@@ -6,7 +6,7 @@ if (isset($_POST['joketext'])){
         include __DIR__ . '/../includes/DatabaseFunctions.php';
 
         //stmt preparation, then binding values and executing
-        insertJoke($pdo, ['authorId' => 1, 'jokeText' => $_POST['joketext'], 'jokedate' => new DateTime()]);
+        insert($pdo, 'jokes', ['authorId' => 1, 'jokeText' => $_POST['joketext'], 'jokedate' => new DateTime()]);
         header('location: jokesdata.php'); //send back to database display after submiting
 
     } catch(PDOException $e){

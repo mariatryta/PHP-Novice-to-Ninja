@@ -3,18 +3,21 @@
     include __DIR__ . '/../includes/DatabaseFunctions.php';
     try { //update text
 		if (isset($_POST['joketext'])) {
-		updateJoke($pdo,[
-			'id' => $_POST['jokeid'],
-			'joketext' => $_POST ['joketext'],
-			'authorid' => 1
-		]);
-		header('location: jokesdata.php');  
+
+			save($pdo, 'joke', 'id', ['id' => $_POST['jokeid'],
+					'joketext' => $_POST['joketext'],
+					'jokedate' => new DateTime(),
+					'authorId' => 1]);
+
+			header('location: jokes.php');  
 	}
-	else { //retrieve the text
-		$joke = getJoke($pdo, $_GET['id']);
+	else { 
+		if (isset($_GET['id'])) {
+			$joke = findById($pdo, 'joke', 'id', $_GET['id']);
+		}
 		$title = 'Edit joke';
 		ob_start();
-		include  __DIR__ . '/../templates/editjokelayout.php';
+		include  __DIR__ . '/../templates/editjoke.html.php';
 		$output = ob_get_clean();
 	}
 }
