@@ -1,24 +1,27 @@
 <?php
-    include __DIR__ . '/../includes/DatabaseConnection.php';
-    include __DIR__ . '/../includes/DatabaseFunctions.php';
-    try { //update text
-		if (isset($_POST['joketext'])) {
+try { //update text
 
-			save($pdo, 'joke', 'id', ['id' => $_POST['jokeid'],
-					'joketext' => $_POST['joketext'],
-					'jokedate' => new DateTime(),
-					'authorId' => 1]);
+	include __DIR__ . '/../includes/DatabaseConnection.php';
+	include __DIR__ . '/../classes/databasetable.php';
 
-			header('location: jokes.php');  
+	$jokesTable = new DatabaseTable($pdo, 'jokes', 'id');
+		if (isset($_POST['joke'])) {
+
+			$joke = $_POST['joke'];
+			$joke['jokedate'] = new DateTime();
+			$joke['authorid'] =1;
+
+			$jokesTable->save($joke);
+			header('location: index.php');  
 	}
 	else { 
 		if (isset($_GET['id'])) {
-			$joke = findById($pdo, 'joke', 'id', $_GET['id']);
+			$joke = $jokesTable->findById($_GET['id']);
 		}
 		$title = 'Edit joke';
 		ob_start();
-		include  __DIR__ . '/../templates/editjoke.html.php';
-		$output = ob_get_clean();
+		include  __DIR__ . '/../templates/editjokelayout.php';
+		$output = ob_get_clean(); 
 	}
 }
     catch (PDOException $e) {

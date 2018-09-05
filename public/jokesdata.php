@@ -6,12 +6,14 @@
 // Catching errors in connection
 try{
     include __DIR__ . '/../includes/DatabaseConnection.php';
-    include __DIR__ . '/../includes/DatabaseFunctions.php'; // creates totaljokes variable that can be used in jokesdata.php
-  
-	$result = findAll($pdo, 'jokes');
+	include __DIR__ . '/../classes/databasetable.php';
+	$jokesTable = new DatabaseTable($pdo, 'jokes', 'id');
+	$authorsTable = new DatabaseTable($pdo, 'author', 'id');
+    $result = $jokesTable->findAll();
+    
 	$jokes = [];
 	foreach ($result as $joke) {
-		$author = findById($pdo, 'author', 'id', $joke['authorid']);
+		$author = $authorsTable->findById($joke['authorId']);
 		$jokes[] = [
 			'id' => $joke['id'],
 			'joketext' => $joke['joketext'],
@@ -19,8 +21,7 @@ try{
 			'name' => $author['name'],
 			'email' => $author['email']
 		];
-    }
-    
+	}
     $title = 'Joke list';
   
     // Option a) Display jokes in output in layout.php where output gets html code //concataneded
