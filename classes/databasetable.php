@@ -3,6 +3,7 @@ class DatabaseTable {
 	private $pdo;
 	private $table;
 	private $primaryKey;
+	//constructor with specified type of an argument that needs to be suplied
 	public function __construct(PDO $pdo, string $table, string $primaryKey) {
 		$this->pdo = $pdo;
 		$this->table = $table;

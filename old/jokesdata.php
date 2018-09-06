@@ -5,24 +5,12 @@
 
 // Catching errors in connection
 try{
-    include __DIR__ . '/../includes/DatabaseConnection.php';
+    include __DIR__ . '/../includes/DatabaseConnection.php'; //including connection via function so it's reusable $pdo variable 
 	include __DIR__ . '/../classes/databasetable.php';
-	$jokesTable = new DatabaseTable($pdo, 'jokes', 'id');
+	$jokesTable = new DatabaseTable($pdo, 'jokes', 'id'); // passing pdo varibale and arguments
 	$authorsTable = new DatabaseTable($pdo, 'author', 'id');
-    $result = $jokesTable->findAll();
     
-	$jokes = [];
-	foreach ($result as $joke) {
-		$author = $authorsTable->findById($joke['authorId']);
-		$jokes[] = [
-			'id' => $joke['id'],
-			'joketext' => $joke['joketext'],
-			'jokedate' => $joke['jokedate'],
-			'name' => $author['name'],
-			'email' => $author['email']
-		];
-	}
-    $title = 'Joke list';
+
   
     // Option a) Display jokes in output in layout.php where output gets html code //concataneded
         // $output = '';
@@ -36,12 +24,6 @@ try{
 
     // Option b) ob, save all the unique html code in a buffer and spit it out in 
     // layout.html which is the same for every page
-    $totalJokes = total($pdo, 'jokes');
-
-    ob_start();
-    include  __DIR__ . '/../templates/jokes.php';
-
-    $output = ob_get_clean();
 }
 
 catch(PDOException $e){
