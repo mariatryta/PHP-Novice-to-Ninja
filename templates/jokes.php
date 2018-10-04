@@ -16,9 +16,8 @@
   ?>
 
   </p>
-  <a href="index.php?action=edit&id=<?=$joke['id']?>" id='edit' class='flex-child' >Edit</a>
-
-  <form action="index.php?action=delete" method="post" class='flex-child'>
+  <a href="/joke/edit?id=<?=$joke['id']?>" id='edit' class='flex-child' >Edit</a>
+  <form action="/joke/delete" method="post"class='flex-child'>
     <input type="hidden" name="id" value="<?=$joke['id']?>">
     <input type="submit" value="Delete">
   </form>

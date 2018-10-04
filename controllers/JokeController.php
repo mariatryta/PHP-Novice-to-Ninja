@@ -22,7 +22,7 @@ class JokeController {
 		}
 		$title = 'Joke list';
 		$totalJokes = $this->jokesTable->total();
-        return ['template' => 'jokes.html.php',
+        return ['template' => 'jokes.php',
                 'title' => $title,
                 'variables' => [
                     'totalJokes' => $totalJokes,
@@ -32,11 +32,11 @@ class JokeController {
     	}
 	public function home() {
 		$title = 'Internet Joke Database';
-        return ['template' => 'home.php', 'title' =>$title]; 
+		return ['template' => 'home.php', 'title' => $title];
     }
 	public function delete() {
 		$this->jokesTable->delete($_POST['id']);
-		header('location: index.php?action=list');
+		header('location: /joke/list'); 
 	}
 	public function edit() {
 		if (isset($_POST['joke'])) {
@@ -45,16 +45,17 @@ class JokeController {
 			$joke['authorid'] = 1;
 			$this->jokesTable->save($joke);
 			
-		header('location: index.php?action=list');  
+			header('location: /joke/list'); 
 		}
 		else {
 			if (isset($_GET['id'])) {
 				$joke = $this->jokesTable->findById($_GET['id']);
 			}
 			$title = 'Edit joke';
-            return ['template' => 'editjoke.html.php
-                title' => $title,
-                'variables' => ['joke' => $joke ?? null] 
+            return [
+				'template' => 'editjokelayout.php',
+                'title' => $title,
+				'variables' => ['joke' => $joke ?? null] 
             ];		
         }
 	}
