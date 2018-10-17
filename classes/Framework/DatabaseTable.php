@@ -1,10 +1,14 @@
 <?php
+namespace Framework;
+
 class DatabaseTable {
 	private $pdo;
 	private $table;
 	private $primaryKey;
-	//constructor with specified type of an argument that needs to be suplied
-	public function __construct(PDO $pdo, string $table, string $primaryKey) {
+	
+	//constructor with specified type of an argument that needs to be supplied
+	// have to change PDO to \PDO so that php doesn't look for ninja namespace but rather calls PDO
+	public function __construct(\PDO $pdo, string $table, string $primaryKey) {
 		$this->pdo = $pdo;
 		$this->table = $table;
 		$this->primaryKey = $primaryKey;
@@ -64,7 +68,8 @@ class DatabaseTable {
 	}
 	private function processDates($fields) {
 		foreach ($fields as $key => $value) {
-			if ($value instanceof DateTime) {
+			// referencing global namespace with backlash rather than Ninja namespace
+			if ($value instanceof \DateTime) {
 				$fields[$key] = $value->format('Y-m-d');
 			}
 		}
@@ -77,7 +82,7 @@ class DatabaseTable {
 			}
 			$this->insert($record);
 		}
-		catch (PDOException $e) {
+		catch (\PDOException $e) {
 			$this->update( $record);
 		}
 	}

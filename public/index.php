@@ -1,10 +1,9 @@
 <?php
 try {
-	include __DIR__ . '/../classes/entrypoint.php';
-	include __DIR__ . '/../classes/ijdbroutes.php';
+	include __DIR__ . '/../includes/autoloader.php';
 	
 	$route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/'); //strip url to get the final route variable 
-	$entryPoint = new EntryPoint($route,new IjdbRoutes()); //create new route using entrypoint class and auto check urls
+	$entryPoint = new \Framework\EntryPoint($route, $_SERVER['REQUEST_METHOD'],new \Ijdb\IjdbRoutes()); //create new route using entrypoint class and auto check urls
 	$entryPoint->run(); // determine which joke/... should run using CallAction  
 }
 catch (PDOException $e) {
@@ -12,4 +11,4 @@ catch (PDOException $e) {
 	$output = 'Database error: ' . $e->getMessage() . ' in ' .
 	$e->getFile() . ':' . $e->getLine();
 	include  __DIR__ . '/../templates/layout.html.php';
-}
+} 
